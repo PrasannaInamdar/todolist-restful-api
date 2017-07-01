@@ -4,6 +4,10 @@ from models import db ,db1, User
 from flask_sqlalchemy import SQLAlchemy
 from message import client
 import json
+import logging
+import sys
+
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Abcd@123456@localhost/learningflask'
@@ -49,6 +53,9 @@ def my_form_post():
 						User.query.filter_by(uid=e).update(dict(taskname=updatedText))
 					db.session.commit()
 					return render_template("index.html",User=User.query.all())
+
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR)
 
 
 if __name__ == "__main__":
