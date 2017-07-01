@@ -17,7 +17,7 @@ def index():
 @app.route("/getdata", methods=['GET'])
 def get_User(): 
 	myuser=User.query.all()
-    	if myuser =="":
+    	if myuser=="":
     		return 404
     	return Response(json.dumps({'taskname':[user.taskname for user in myuser]}),  mimetype='application/json')
 
