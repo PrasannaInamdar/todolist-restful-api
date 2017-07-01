@@ -33,7 +33,7 @@ def my_form_post():
 			to="+15122105811", 	from_="+17734327410" , body ="A task has been added to your todo list :  "+ text)
 			print(message.sid)
 			return render_template("index.html",User=User.query.all())
- 	
+				
 		else:	
 			newuser = request.form.getlist('removeId')
 			if newuser:
