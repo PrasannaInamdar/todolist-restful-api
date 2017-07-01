@@ -17,9 +17,9 @@ def index():
 @app.route("/getdata", methods=['GET'])
 def get_User(): 
 	myuser=User.query.all()
-    	if myuser=="":
-    		return 404
-    	return Response(json.dumps({'taskname':[user.taskname for user in myuser]}),  mimetype='application/json')
+		if myuser=="":
+			return 404
+		return Response(json.dumps({'taskname':[user.taskname for user in myuser]}),  mimetype='application/json')
 
 @app.route('/', methods=['POST'])
 def my_form_post():
