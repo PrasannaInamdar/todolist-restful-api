@@ -19,8 +19,8 @@ def get_User():
 	myuser=User.query.all()
 		#if myuser=="":
 		#	return 404
-	return Response(json.dumps({'taskname':[user.taskname for user in myuser]}),  mimetype='application/json')
-
+	return Response(json.dumps({'taskname': ["user.taskname"]}),  mimetype='application/json')
+#for user in myuser
 @app.route('/', methods=['POST'])
 def my_form_post():
 	
