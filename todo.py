@@ -9,7 +9,7 @@ from flask_heroku import Heroku
 from models import User
 
 
-
+                                                                             
 
 app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Abcd@123456@localhost/learningflask'
