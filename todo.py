@@ -31,6 +31,7 @@ def get_User():
 @app.route('/', methods=['POST'])
 def my_form_post():
 	
+
 		text=request.form['text']
 		if text !="":
 			newuser = User(text)
