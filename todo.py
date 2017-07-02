@@ -5,7 +5,7 @@ from message import client
 import json
 import logging
 import sys
-from flask.ext.heroku import Heroku
+from flask_heroku import Heroku
 
 
 
