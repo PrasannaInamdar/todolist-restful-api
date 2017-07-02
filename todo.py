@@ -1,6 +1,5 @@
 from flask import Flask, render_template , Response	
 from flask import request , jsonify
-from models import db ,db1, User
 from flask_sqlalchemy import SQLAlchemy
 from message import client
 import json
@@ -10,10 +9,12 @@ from flask_heroku import Heroku
 
 
 
+
 app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Abcd@123456@localhost/learningflask'
 
 heroku= Heroku(app)
+db = SQLAlchemy(app)
 db.init_app(app)
 
 @app.route("/")
