@@ -6,6 +6,7 @@ import json
 import logging
 import sys
 from flask_heroku import Heroku
+from models import User
 
 
 
