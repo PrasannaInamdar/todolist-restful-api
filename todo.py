@@ -7,21 +7,21 @@ import logging
 import sys
 from flask_heroku import Heroku
 from models import User
-
+import os
+from flask_migrate import Migrate
 
                                                                              
 
 app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Abcd@123456@localhost/learningflask'
 
+
 heroku= Heroku(app)
 db = SQLAlchemy(app)
 db.init_app(app)
+migrate = Migrate(app, db)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-
-if __name__ == "__main__":
-	app.run(debug=True)	 
-	db.create_all()
 
 @app.route("/")
 def index():
@@ -66,6 +66,10 @@ def my_form_post():
 					db.session.commit()
 					return render_template("index.html",User=User.query.all())
 
+
+if __name__ == "__main__":
+	app.run(debug=True)	 
+	db.create_all()
 
 
 app.logger.addHandler(logging.StreamHandler(sys.stdout))
