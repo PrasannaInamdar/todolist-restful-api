@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
-from todo import app
 
-db = SQLAlchemy(app)
+
+db = SQLAlchemy()
 db1 = SQLAlchemy()
 
 
