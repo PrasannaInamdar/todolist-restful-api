@@ -18,6 +18,11 @@ heroku= Heroku(app)
 db = SQLAlchemy(app)
 db.init_app(app)
 
+
+if __name__ == "__main__":
+	app.run(debug=True)	 
+	db.create_all()
+
 @app.route("/")
 def index():
 	return render_template("index.html",User=User.query.all())
@@ -28,6 +33,8 @@ def get_User():
 	if myuser=="":
 		return 404
 	return Response(json.dumps({'taskname':[user.taskname for user in myuser]}),  mimetype='application/json')
+
+
 
 @app.route('/', methods=['POST'])
 def my_form_post():
@@ -59,10 +66,8 @@ def my_form_post():
 					db.session.commit()
 					return render_template("index.html",User=User.query.all())
 
+
+
 app.logger.addHandler(logging.StreamHandler(sys.stdout))
 app.logger.setLevel(logging.ERROR)
 
-
-if __name__ == "__main__":
-	app.run(debug=True)	 
-	db.create_all()
