@@ -13,11 +13,21 @@ from flask_migrate import Migrate
                                                                              
 
 app = Flask(__name__)
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Abcd@123456@localhost/learningflask'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Abcd@123456@localhost/learningflask'
 
 
 heroku= Heroku(app)
 db = SQLAlchemy(app)
+
+
+
+class User(db.Model):
+	__tablename__='tasks'
+	uid=db.Column(db.Integer, primary_key = True)
+	taskname = db.Column(db.String(100))
+
+	def __init__(self,taskname):
+		self.taskname=taskname
 
 
 
@@ -68,7 +78,6 @@ def my_form_post():
 if __name__ == "__main__":
 	app.run(debug=True)	 
 	
-
 
 app.logger.addHandler(logging.StreamHandler(sys.stdout))
 app.logger.setLevel(logging.ERROR)
