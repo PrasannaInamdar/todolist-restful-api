@@ -18,9 +18,7 @@ app = Flask(__name__)
 
 heroku= Heroku(app)
 db = SQLAlchemy(app)
-db.init_app(app)
-migrate = Migrate(app, db)
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 
 
 @app.route("/")
@@ -69,7 +67,7 @@ def my_form_post():
 
 if __name__ == "__main__":
 	app.run(debug=True)	 
-	db.create_all()
+	
 
 
 app.logger.addHandler(logging.StreamHandler(sys.stdout))
