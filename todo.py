@@ -8,12 +8,10 @@ import sys
 from flask_heroku import Heroku
 
 import os
-from flask_migrate import Migrate
-
                                                                              
 
 app = Flask(__name__)
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Abcd@123456@localhost/learningflask'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Abcd@123456@localhost/learningflask'
 
 
 heroku= Heroku(app)
