@@ -1,23 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="static/tableCss.css">
-        <link rel="stylesheet" href="{{ url_for('static', filename='xeditable.css') }}">
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-        <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> 
-        <script src="{{ url_for('static', filename='xeditable.js') }}"></script>
-        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+<html>
+<head>
+ <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+<link rel="stylesheet" type="text/css" href="static/main.css">
+ <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+ <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> 
+</head>
+<body>
 
-        <meta http-equiv="content-type" content="text/html; charset=utf-8" />   
-    </head>
-    <body >
 
-    <form editable-form action="" method="POST">
 
-        <div  ng-app="app" ng-controller="myctrl" >
-        //myname//
-         <table>
+<div ng-app="myApp" ng-controller="myCtrl">
+
+ <table>
             <caption> Todo List</caption>
                 <thead>
                     <tr>
@@ -37,51 +33,42 @@
                 </thead>
                 
                 <tbody>
-                    
-                   <!-- {% for user in User %}-->
-                    <tr ng-repeat="user in User">
-                        <td> {{user.uid }} </td>
-                        <td > <input type="text" name="updatedText" ng-disabled="!disable" ng-bind="user.taskname" value="{{user.taskname}}"> 
-                            <input type="image"  class="deleteImg" src="static/img/trash_can.png" height="15px" width="18px" name="removeId" value="{{user.uid}}" > 
-                             <input type="image" ng-hide="okbtnstatus"  src="static/img/okbtn.png"  height="15px" width="18px" name="editId" value="{{user.uid}}">
-                             <a href="#"> <span ng-hide="editbtn" ng-click="disable=!disable; okbtnstatus=false; cancelbtn=false; editbtn=true;" class="glyphicon glyphicon-pencil"></span></a>
-                              <a href="#"><span ng-hide="cancelbtn" ng-click="editbtn=false; okbtnstatus=true; cancelbtn=true;disable=!disable;" class="glyphicon glyphicon-remove"></span></a>
-                        </td>
+                   
+                    <tr data-ng-repeat="user in tasks.tasks">
+                  
+                        <td> // user.uid // </td>
+                         <td >  <input type="text" name="updatedText" ng-disabled="!disable" ng-bind="user.taskname" value="//user.taskname//"> 
+                         <input type="image"  class="deleteImg" src="static/img/trash_can.png" height="15px" width="18px" name="removeId" value="//user.uid//" > 
+                          <input type="image" ng-hide="okbtnstatus"  src="static/img/okbtn.png"  height="15px" width="18px" name="editId" value="//user.uid//">
+                          <a href="#"> <span ng-hide="editbtn" ng-click="disable=!disable; okbtnstatus=false; cancelbtn=false; editbtn=true;" class="glyphicon glyphicon-pencil"></span></a>
+                           <a href="#"><span ng-hide="cancelbtn" ng-click="editbtn=false; okbtnstatus=true; cancelbtn=true;disable=!disable;" class="glyphicon glyphicon-remove"></span></a>
+                         </td>
                     </tr>
-                    <!--{% endfor %}-->
+           
                 </tbody>
             </table>
-        </div>
-   <script>
          
-        var app = angular.module("app", ['xeditable']);
-        app.controller('myctrl', function($scope, $http) {
-            $scope.cancelbtn=true;
-            $scope.okbtnstatus=true;
-            $scope.User=[];
-            $http.get("/getdata")
-            .then(function(response){
-                $scope.User=response.data
-                 console.log($scope.User)
-            })
 
-      
-           
-        });
-        app.config(function($interpolateProvider) {
+<script>
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope,$http){
+    $scope.cancelbtn=true;
+    $scope.okbtnstatus=true;
+     $scope.tasks=[];
+     $http.get("/items").then(function(response){
+         //handle your response here
+         $scope.tasks = response.data
+          console.log($scope.tasks)
+
+    });
+});
+
+
+ app.config(function($interpolateProvider) {
             $interpolateProvider.startSymbol('//').endSymbol('//');
         });
-        app.config(['$qProvider', function ($qProvider) {
-         $qProvider.errorOnUnhandledRejections(false);
-        }]);
-    
-        app.run(function(editableOptions) {
-            editableOptions.theme = 'bs3'; // bootstrap3 theme. Can be also 'bs2', 'default'
-        });
-        </script>  
-        
-     </form> 
-            
-    </body>
+
+</script>
+   </div>
+</body>
 </html>
-  
