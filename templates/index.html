@@ -10,17 +10,17 @@
 <body>
 
 
+<form >
 
 <div ng-app="myApp" ng-controller="myCtrl">
-
  <table>
             <caption> Todo List</caption>
                 <thead>
                     <tr>
                         <td>
-                            <input type="text" ng-model="main" name="text">
-                            <input type="submit"  value="Add Task" >
-                        
+                            <input type="text" ng-model="main" name="taskname">
+                            <button type="submit" ng-click="sendinURL()" class="btn-primary">Add Task</button>
+
                         </td><td>
                         Search :<input type="text"> 
 
@@ -38,7 +38,7 @@
                   
                         <td> // user.uid // </td>
                          <td >  <input type="text" name="updatedText" ng-disabled="!disable" ng-bind="user.taskname" value="//user.taskname//"> 
-                         <input type="image"  class="deleteImg" src="static/img/trash_can.png" height="15px" width="18px" name="removeId" value="//user.uid//" > 
+                         <input type="image" value="//user.taskname//" class="deleteImg" ng-click=deleteIt(user.taskname) src="static/img/trash_can.png" height="15px" width="18px" name="removeId"  > 
                           <input type="image" ng-hide="okbtnstatus"  src="static/img/okbtn.png"  height="15px" width="18px" name="editId" value="//user.uid//">
                           <a href="#"> <span ng-hide="editbtn" ng-click="disable=!disable; okbtnstatus=false; cancelbtn=false; editbtn=true;" class="glyphicon glyphicon-pencil"></span></a>
                            <a href="#"><span ng-hide="cancelbtn" ng-click="editbtn=false; okbtnstatus=true; cancelbtn=true;disable=!disable;" class="glyphicon glyphicon-remove"></span></a>
@@ -49,6 +49,10 @@
             </table>
          
 
+
+   </div>
+   </form>
+</body>
 <script>
 var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope,$http){
@@ -61,6 +65,32 @@ app.controller('myCtrl', function($scope,$http){
           console.log($scope.tasks)
 
     });
+     $scope.sendinURL = function (){
+        var data =$scope.main 
+        $http({
+    method : "POST",
+    url : "item/"+data
+  }).then(function mySuccess(response) {
+        alert("Done")
+    }, function myError(response) {
+        alert("Not Done")
+  });
+
+     }
+
+     $scope.deleteIt = function(value){
+        alert(value)
+        var data = value
+        $http({
+            method:"DELETE",
+            url:"item/"+data
+        }).then(function mySuccess(response){
+            alert("Deleted")
+        }, function myError(response){
+            alert("Error Occurred")
+        });
+     }
+
 });
 
 
@@ -69,6 +99,4 @@ app.controller('myCtrl', function($scope,$http){
         });
 
 </script>
-   </div>
-</body>
 </html>

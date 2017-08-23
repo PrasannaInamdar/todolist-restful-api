@@ -15,7 +15,7 @@ class Item(Resource):
 		help="This field can not be left blank"
 		)
 
-	@jwt_required()
+	#@jwt_required()
 	def get(self, taskname):
 		item = ItemModel.find_by_name(taskname)
 		if item:	
