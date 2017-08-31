@@ -106,8 +106,7 @@ app.controller('myCtrl', function($scope,$http){
 
      $scope.updateIt = function(value1){
        
-        alert(value1)
-        alert($scope.iamGlobal)
+    
 
         $http({
             method: "PUT",
@@ -115,7 +114,7 @@ app.controller('myCtrl', function($scope,$http){
             headers: { 'Content-Type': 'application/json' },
             data: { newTask: value1 }
         }).then(function mySuccess(response){
-            alert("Updated!!!")
+            
         }, 
             function myError(response){
                 
