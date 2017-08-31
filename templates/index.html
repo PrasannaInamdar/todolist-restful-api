@@ -23,7 +23,7 @@
                             <button type="submit" ng-click="sendinURL()" class="btn-primary">Add Task</button>
 
                         </td><td>
-                        Search :<input type="text"> 
+                        Search :<input type="text" ng-model="search"> 
 
                         </td>
                     </tr>
@@ -35,7 +35,7 @@
                 
                 <tbody>
                    
-                    <tr data-ng-repeat="user in tasks.tasks">
+                    <tr data-ng-repeat="user in tasks.tasks | filter : search ">
                   
                         <td> // user.uid // </td>
                          <td >  <input type="text" id="ddd" name="updatedText" ng-model="user.taskname"  ng-disabled="!disable"  value="//user.taskname//"> 
