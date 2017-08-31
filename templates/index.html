@@ -2,6 +2,7 @@
 <html>
 <head>
  <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="static/tableCss.css">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <link rel="stylesheet" type="text/css" href="static/main.css">
  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
@@ -37,10 +38,14 @@
                     <tr data-ng-repeat="user in tasks.tasks">
                   
                         <td> // user.uid // </td>
-                         <td >  <input type="text" name="updatedText" ng-disabled="!disable" ng-bind="user.taskname" value="//user.taskname//"> 
+                         <td >  <input type="text" id="ddd" name="updatedText" ng-model="user.taskname"  ng-disabled="!disable"  value="//user.taskname//"> 
+
                          <input type="image" value="//user.taskname//" class="deleteImg" ng-click=deleteIt(user.taskname) src="static/img/trash_can.png" height="15px" width="18px" name="removeId"  > 
-                          <input type="image" ng-hide="okbtnstatus"  src="static/img/okbtn.png"  height="15px" width="18px" name="editId" value="//user.uid//">
-                          <a href="#"> <span ng-hide="editbtn" ng-click="disable=!disable; okbtnstatus=false; cancelbtn=false; editbtn=true;" class="glyphicon glyphicon-pencil"></span></a>
+
+                          <input type="image" ng-hide="okbtnstatus" ng-click="updateIt(user.taskname)"  src="static/img/okbtn.png"  height="15px" width="18px" name="editId" value="//user.uid//">
+                         
+                          <a href="#" ng-click="editbuttonClicked(user.taskname)" > <span ng-hide="editbtn" ng-click="disable=!disable; okbtnstatus=false; cancelbtn=false; editbtn=true;" class="glyphicon glyphicon-pencil"></span></a>
+                         
                            <a href="#"><span ng-hide="cancelbtn" ng-click="editbtn=false; okbtnstatus=true; cancelbtn=true;disable=!disable;" class="glyphicon glyphicon-remove"></span></a>
                          </td>
                     </tr>
@@ -58,7 +63,15 @@ var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope,$http){
     $scope.cancelbtn=true;
     $scope.okbtnstatus=true;
-     $scope.tasks=[];
+    $scope.tasks=[];
+    var iamGlobal;
+     $scope.editbuttonClicked =function(makeMeGlobal){
+        alert(makeMeGlobal)
+        $scope.iamGlobal=makeMeGlobal;
+     }
+
+         
+
      $http.get("/items").then(function(response){
          //handle your response here
          $scope.tasks = response.data
@@ -71,25 +84,41 @@ app.controller('myCtrl', function($scope,$http){
     method : "POST",
     url : "item/"+data
   }).then(function mySuccess(response) {
-        alert("Done")
+       
     }, function myError(response) {
-        alert("Not Done")
+    
   });
 
      }
 
      $scope.deleteIt = function(value){
-        alert(value)
+     
         var data = value
         $http({
             method:"DELETE",
             url:"item/"+data
         }).then(function mySuccess(response){
-            alert("Deleted")
+           
         }, function myError(response){
-            alert("Error Occurred")
+            
         });
      }
+
+     $scope.updateIt = function(value1){
+       
+        alert(value1)
+        alert($scope.iamGlobal)
+        $http({
+            method: "PUT",
+            url:"item/"+$scope.iamGlobal,
+            data: "Prasanna"
+        }).then(function mySuccess(response){
+            alert("Updated!!!")
+        }, 
+            function myError(response){
+                
+            });
+     }  
 
 });
 

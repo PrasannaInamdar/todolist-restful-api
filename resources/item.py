@@ -37,24 +37,30 @@ class Item(Resource):
 			return {"messege":"An error occurred saving a task!"}
 
 		return work.json(), 201
-
+  
 	def delete(self, taskname):
 		task = ItemModel.find_by_name(taskname)
 		if task:
 			task.delete_from_db()
 		return {"messege":"task is deleted"}
 
-
+ 
 	def put(self, taskname):
-		data = Item.parser.parse_args()
+		
+		taskname = Item.parser.parse_args()
+		print ("pashya")
+		
 		task = ItemModel.find_by_name(taskname)
-		if task:
-			task.taskname = data['taskname']
-		task.save_to_db()
-		return task.json()
-
-
-
+		if task: 
+			print ("yo")
+			task.taskname = maindata['taskname']
+			task.save_to_db()     
+			return task.json()
+		else:
+			print ("i dint find task")
+      
+                              
+                    
 
 class ItemList(Resource):
 	def get(self):
