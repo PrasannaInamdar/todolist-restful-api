@@ -9,14 +9,12 @@ from flask_jwt import JWT
 from security import authenticate, identity
 
 app=Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Abcd@123456@localhost/learningflask'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Abcd@123456@localhost/learningflask'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 api=Api(app)
 app.secrete_key = 'Prasanna'
 
-@app.before_first_request
-def create_tables():
-	db.create_all()
+
 
 
 jwt = JWT(app, authenticate, identity)		
