@@ -108,10 +108,12 @@ app.controller('myCtrl', function($scope,$http){
        
         alert(value1)
         alert($scope.iamGlobal)
+
         $http({
             method: "PUT",
             url:"item/"+$scope.iamGlobal,
-            data: "Prasanna"
+            headers: { 'Content-Type': 'application/json' },
+            data: { newTask: value1 }
         }).then(function mySuccess(response){
             alert("Updated!!!")
         }, 

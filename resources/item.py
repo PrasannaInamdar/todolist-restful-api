@@ -9,7 +9,7 @@ from flask_jwt import JWT, jwt_required
 class Item(Resource):
 	parser = reqparse.RequestParser()
 	
-	parser.add_argument('taskname',
+	parser.add_argument('newTask',
 		type=str,
 		required=True,
 		help="This field can not be left blank"
@@ -46,22 +46,21 @@ class Item(Resource):
 
  
 	def put(self, taskname):
+	
+		data = Item.parser.parse_args()
+		item = ItemModel.find_by_name(taskname)
 		
-		taskname = Item.parser.parse_args()
-		print ("pashya")
-		
-		task = ItemModel.find_by_name(taskname)
-		if task: 
-			print ("yo")
-			task.taskname = maindata['taskname']
-			task.save_to_db()     
-			return task.json()
+		if item: 
+			print ("I found the task")
+			item.taskname = data['newTask']
+			item.save_to_db()     
+			return item.json()
 		else:
 			print ("i dint find task")
       
                               
                     
-
+          
 class ItemList(Resource):
 	def get(self):
-		return {'tasks':list(map(lambda x:x.json(), ItemModel.query.all()	))}
+		return {'tasks':list(map(lambda x:x.json(), ItemModel.query.all()	))}                   
