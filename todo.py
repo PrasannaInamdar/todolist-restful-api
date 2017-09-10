@@ -1,6 +1,7 @@
 import os
 from flask import Flask, request, render_template, Response
 from flask_restful import Resource, Api, reqparse
+from flask_cors import CORS
 
 from resources.User import Register
 from resources.item import Item, ItemList
@@ -14,7 +15,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','postgresq
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 api=Api(app)
 app.secrete_key = 'Prasanna'
-
+CORS(app)
 
 
 
@@ -36,9 +37,9 @@ def signin():
 def index():
 	return render_template("index.html")
 
-@app.route("/getdata", methods =['GET'])
-def getdata():
-	return {'tasks': list(map(lambda x:x.json(), ItemModel.query.all()	))}
+#@app.route("/getdata", methods =['GET'])
+#def getdata():
+#	return {'tasks': list(map(lambda x:x.json(), ItemModel.query.all()	))}
 
 
 api.add_resource(Item , '/item/<string:taskname>')
